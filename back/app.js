@@ -1,7 +1,7 @@
 const express = require('express')
 const mongoose = require('mongoose')
 //const path = require('path')
-//const Thing = require('./models/Thing')
+const Thing = require('./models/Thing')
 const stuffRoutes = require('./routes/stuff')
 const userRoutes = require('./routes/user')
 
@@ -14,7 +14,6 @@ mongoose.connect(mongoDB,
   .catch(() => console.log('Connexion à MongoDB échouée !'))
 
 const app = express()
-
 app.use(express.json())
 
 app.use((req, res, next) => {
@@ -24,6 +23,7 @@ app.use((req, res, next) => {
     next()
 })
 
-app.use('/api/auth', userRoutes);
+app.use('/api/sauces', stuffRoutes)
+app.use('/api/auth', userRoutes)
 
 module.exports = app
