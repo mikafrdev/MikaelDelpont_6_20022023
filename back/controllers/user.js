@@ -1,12 +1,12 @@
 /*
 npm install bcrypt
 npm install --save jsonwebtoken
-
 */
 
 const bcrypt = require('bcrypt')
-const User = require('../models/User')
 const jwt = require('jsonwebtoken')   //Permet de créer des TOKEN et de les vérifier
+const User = require('../models/User')
+
 
 exports.signup = (req, res, next) => {
     bcrypt.hash(req.body.password, 10)
@@ -44,7 +44,7 @@ exports.login = (req, res, next) => {
                     }
                 })
                 .catch(error => {
-                    res.status(500).json({ error }) //Erreur provenant de la BDD uniquement
+                    res.status(510).json({ error }) //Erreur provenant de la BDD uniquement
                 })
             }
         })
