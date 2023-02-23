@@ -4,10 +4,8 @@ const path = require('path')
 const Thing = require('./models/ModelsSauce')
 const saucesRoutes = require('./routes/sauces')
 const userRoutes = require('./routes/user')
-const fs = require('fs')
 
 const mongoDB = 'mongodb+srv://mikadevfr:Titounis@cluster0.svheaeg.mongodb.net/piquante'
-
 mongoose.connect(mongoDB,
   { useNewUrlParser: true,
     useUnifiedTopology: true })
