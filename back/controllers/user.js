@@ -44,7 +44,7 @@ exports.login = (req, res, next) => {
                     }
                 })
                 .catch(error => {
-                    res.status(510).json({ error }) //Erreur provenant de la BDD uniquement
+                    res.status(403).json({ error }) //Erreur provenant de la BDD uniquement
                 })
             }
         })
