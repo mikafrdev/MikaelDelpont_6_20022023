@@ -100,54 +100,17 @@ exports.deleteSauce = (req, res, next) => {
 
 
 exports.upThumbSauce = (req, res) => {
-    const sauceObject = req.file
+    console.log(req.body.userId)
     ModelsSauce.findOne({ _id: req.params.id })
         .then((sauce) => {
-            if (sauce.userId != req.auth.userId) {
-                res.status(401).json({ message: "Not authorized" });
-            } else {
-                
-                console.log("***** TEST : ", sauce.likes, sauce.dislikes, sauce.usersLiked, sauce.usersDisliked)
-                console.log("***** TEST sauce.likes : ", sauce.likes+1)
-                console.log("***** TEST sauceObject : ", sauceObject)
-                
-                res.status(200).json({ message: "*******   LIKE !" })
-                /*
-                ModelsSauce.updateOne(
-                    { _id: req.params.id },
-                    { ...sauceObject, _id: req.params.id }
-                )
-                    .then(() =>
-                        res.status(200).json({ message: "Objet modifié!" })
-                    )
-                    .catch((error) => res.status(401).json({ error }));
-                */
-
-            }
+            ModelsSauce.updateOne(
+                { _id: req.params.id },
+                { $push: { usersLiked: [req.body.userId] }}
+            )
+                .then(() => res.status(200).json({ message: "Gestion du Like !" }))
+                .catch((error) => res.status(401).json({ error }));
         })
         .catch((error) => {
             res.status(400).json({ error });
         });
-
-        /*
-        .then((sauce) => {
-            if (sauce.userId != req.auth.userId) {
-                res.status(401).json({ message: "Not authorized" });
-            } else {
-                ModelsSauce.updateOne(
-                    { _id: req.params.id },
-                    { ...sauceObject, _id: req.params.id }
-                )
-                    .then(() =>
-                        res.status(200).json({ message: "Objet modifié!" })
-                    )
-                    .catch((error) => res.status(401).json({ error }));
-            }
-        })
-        .catch((error) => {
-            res.status(400).json({ error });
-        });
-        */
-
-
 };
