@@ -100,17 +100,37 @@ exports.deleteSauce = (req, res, next) => {
 
 
 exports.upThumbSauce = (req, res) => {
-    console.log(req.body.userId)
+    
     ModelsSauce.findOne({ _id: req.params.id })
         .then((sauce) => {
-            ModelsSauce.updateOne(
-                { _id: req.params.id },
-                { $push: { usersLiked: [req.body.userId] }}
-            )
-                .then(() => res.status(200).json({ message: "Gestion du Like !" }))
-                .catch((error) => res.status(401).json({ error }));
+
+            if (req.body.like == 1) {
+
+                ModelsSauce.updateOne( { _id: req.params.id }, { $inc: { likes: + 1 }, $push: { usersLiked: req.body.userId }} )
+                    .then(() => res.status(200).json({ message: "Like = 1 !" }))
+                    .catch((error) => res.status(401).json({ error }))
+
+            }else if (req.body.like == -1) {
+                
+                ModelsSauce.updateOne( { _id: req.params.id }, { $inc: { dislikes: + 1 }, $push: { usersDisliked: req.body.userId }} )
+                    .then(() => res.status(200).json({ message: "Like = -1 !" }))
+                    .catch((error) => res.status(401).json({ error }))
+            
+            }else if (req.body.like == 0) {
+                if ( sauce.usersLiked.includes(req.body.userId) ) {
+                    ModelsSauce.updateOne( { _id: req.params.id }, { $inc: { likes: - 1 }, $pull: { usersLiked: req.body.userId }} )
+                        .then(() => res.status(200).json({ message: "Like = 0 !" }))
+                        .catch((error) => res.status(401).json({ error }))
+
+                }else{
+                    ModelsSauce.updateOne( { _id: req.params.id }, { $inc: { dislikes: - 1 }, $pull: { usersDisliked: req.body.userId }} )
+                        .then(() => res.status(200).json({ message: "Like = 0 !" }))
+                        .catch((error) => res.status(401).json({ error }))
+
+                }
+            }
         })
         .catch((error) => {
-            res.status(400).json({ error });
-        });
-};
+            res.status(400).json({ error })
+        })
+}
