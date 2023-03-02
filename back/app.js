@@ -5,10 +5,8 @@ const Thing = require('./models/ModelsSauce')
 const saucesRoutes = require('./routes/sauces')
 const userRoutes = require('./routes/user')
 
-const mongoDB = 'mongodb+srv://mikadevfr:Titounis@cluster0.svheaeg.mongodb.net/piquante'
-mongoose.connect(mongoDB,
-  { useNewUrlParser: true,
-    useUnifiedTopology: true })
+const mongoDB = 'mongodb+srv://' + process.env.DB_USER + ':' + process.env.DB_PASSWORD + '@cluster0.svheaeg.mongodb.net/' + process.env.DB_NAME
+mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('Connexion à MongoDB réussie !'))
   .catch(() => console.log('Connexion à MongoDB échouée !'))
 

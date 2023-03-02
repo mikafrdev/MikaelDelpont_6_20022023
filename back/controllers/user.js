@@ -35,7 +35,7 @@ exports.login = (req, res, next) => {
                     } else {
                         res.status(200).json({
                             userId: user._id,
-                            token: jwt.sign(    //On indique les données à encoder
+                            token: jwt.sign(    //clé secrète pour chiffrer un token qui peut contenir un payload personnalisé et avoir une validité limitée.
                                 { userId: user._id },  
                                 'RANDOM_TOKEN_SECRET',  //Pour le dev mais utiliser une chaine de caractère complexe pour la prod
                                 { expiresIn: '24h' }
