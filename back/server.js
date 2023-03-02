@@ -13,7 +13,6 @@ const normalizePort = val => {
   return false;
 };
 const port = normalizePort(process.env.PORT || process.env.SERVER_PORT);
-console.log("process.env.PORT : ", process.env.PORT)
 app.set('port', port);
 
 const errorHandler = error => {

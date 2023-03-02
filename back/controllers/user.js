@@ -1,12 +1,6 @@
-/*
-npm install bcrypt
-npm install --save jsonwebtoken
-*/
-
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')   //Permet de créer des TOKEN et de les vérifier
 const User = require('../models/User')
-
 
 exports.signup = (req, res, next) => {
     bcrypt.hash(req.body.password, 10)

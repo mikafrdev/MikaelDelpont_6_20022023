@@ -78,7 +78,7 @@ exports.deleteSauce = (req, res, next) => {
     .catch( error => { res.status(200).json({ message: "FAIL !", error }) })
 }
 
-exports.upThumbSauce = (req, res) => {
+exports.likeOrDislikeSauce = (req, res) => {
 
     ModelsSauce.findOne({ _id: req.params.id })
         .then((sauce) => {
