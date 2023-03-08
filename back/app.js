@@ -1,6 +1,6 @@
 const express = require('express')
 const mongoose = require('mongoose')
-const path = require('path')
+const path = require('path')  //Permet d'accéder au path du serveur
 const Thing = require('./models/ModelsSauce')
 const saucesRoutes = require('./routes/sauces')
 const userRoutes = require('./routes/user')
