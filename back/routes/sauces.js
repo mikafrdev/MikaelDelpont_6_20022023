@@ -1,7 +1,10 @@
 const express = require('express')
-const auth = require('../middleware/auth')
 const router = express.Router()
+
+//ATTENTION, on place multer après auth sinon les images des requêtes non authentifiées seront enregistrées dans le serveur
+const auth = require('../middleware/auth')
 const multer = require('../middleware/multer-config')
+
 const saucesCtrl = require('../controllers/sauces')
 
 router.get('/', auth, saucesCtrl.getAllSauces)

@@ -4,7 +4,6 @@ const app = require('./app');
 //Récupère la valeur numérique du port, ex sur un port = "2434sdfdf" sera converti en "2434"
 const normalizePort = val => {
   const port = parseInt(val, 10);
-
   if (isNaN(port)) {
     return val;
   }
@@ -14,12 +13,12 @@ const normalizePort = val => {
   return false;
 };
 
-//Ecoute le port renseigné dans .env sinon le 3000
+//Renvoie un port valide
 const port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
+//recherche les différentes erreurs et les gère de manière appropriée. Elle est ensuite enregistrée dans le serveur
 const errorHandler = error => {
-  //Regarde si l'erreur est bien liée à la connexion au socket
   if (error.syscall !== 'listen') {
     throw error;
   }
@@ -46,6 +45,7 @@ const errorHandler = error => {
 const server = http.createServer(app);
 
 server.on('error', errorHandler);
+//Ecouteur d'évènements
 server.on('listening', () => {
   const address = server.address();
   const bind = typeof address === 'string' ? 'pipe ' + address : 'port ' + port;

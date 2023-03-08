@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken')   //Permet de créer des TOKEN et de les vé
 const User = require('../models/User')
 
 exports.signup = (req, res, next) => {
+    //crée un hash crypté des mots de passe de vos utilisateurs pour les enregistrer de manière sécurisée dans la base de données
     bcrypt.hash(req.body.password, 10)
         .then(hash => {
             const user = new User({
@@ -29,9 +30,15 @@ exports.login = (req, res, next) => {
                     } else {
                         res.status(200).json({
                             userId: user._id,
-                            token: jwt.sign(    //clé secrète pour chiffrer un token qui peut contenir un payload personnalisé et avoir une validité limitée.
-                                { userId: user._id },  
-                                'RANDOM_TOKEN_SECRET',  //Pour le dev mais utiliser une chaine de caractère complexe pour la prod
+                            /*
+                                On encode le token grace à jsonwebtoken
+                                PAYLOAD => ID user
+                                SECRET_KEY => Clé d'encryptage
+                                OPTIONS => expiresIn durée de validité
+                            */
+                            token: jwt.sign(
+                                { userId: user._id },
+                                'RANDOM_TOKEN_SECRET',
                                 { expiresIn: '24h' }
                             )
                         })
